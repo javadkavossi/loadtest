@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
         sum += index
     }
 
-    cluster.worker.kill()
+    // cluster.worker.kill()
     res.send(`process Id : ${process.pid}`)
 })
 
