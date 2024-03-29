@@ -1,13 +1,15 @@
 const express = require("express");
 
+const { fork } = require("child_process");
 const app = express();
 
 app.get("/", (req, res) => {
-    let sum = 0 
-    for (let index = 0; index < 1000000000; index++) {
-        sum += index
-    }
-    res.send(sum.toString());
+    const child = fork("longTask.js");
+    child.send("start-process")
+    child.on("message", sum => {
+        res.send(sum.toString())
+    })
+    
 })
 
 app.listen(3030, () => console.log("Example app listening on port 3030!"));
